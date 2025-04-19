@@ -21,7 +21,7 @@
 
       //方法
       function changeName (){
-        name = 'zhang-san'
+        name = 'zhang-san'//页面没有变化，但是代码执行成功了
         console.log(name);
       }
       function changeAge (){
@@ -40,6 +40,7 @@
         changeAge,
         showTel
       }
+      //return ()=>"haha" //箭头函数，srtup不能用this，所以可以直接简写，页面直接渲染返回内容
     }
   }
 </script>
