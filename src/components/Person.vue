@@ -6,13 +6,29 @@
     <button @click="changeName">修改名字</button>
     <button @click="changeAge">修改年龄</button>
     <button @click="showTel">查看联系方式</button>
-
+    <hr>
+    <h2>setup与OptionsAPI的关系</h2>
+    //data和与setup可以一起使用，共存
+    <h2>测试1:{{ a }}</h2>
+    <button @click="b">测试2</button>
+    <h2>测试3:{{ c }}</h2>
   </div>
 </template>
 
 <script lang="ts">
   export default {
     name:'Person-info',
+    data() {
+      return {
+        a:100,
+        c:this.name//data可以读取setup中的响应式数据，但setup不可以读取data中的数据
+      }
+    },
+    methods:{
+      b(){
+        console.log('b');
+      }
+    },
     setup(){
      //变量
       let name = '张三' //此时的name不是响应式数据
