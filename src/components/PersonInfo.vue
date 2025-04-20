@@ -1,6 +1,6 @@
 <template>
   <div class="person">
-    <h1>情况四：监视ref或reactive定义的【对象类型】数据中的某个属性</h1>
+    <h1>情况五：监视上述的多个数据</h1>
     <h2>姓名：{{ person.name }}</h2>
     <h2>年龄：{{ person.age }}</h2>
     <h2>第一台车：{{ person.car.c1 }}</h2>
@@ -8,13 +8,14 @@
     <button @click="changName">点击修改姓名</button>
     <button @click="changAge">点击修改年龄</button>
     <button @click="changC1">点击修改第一台车</button>
-    <button @click="changC2">点击修改</button>
+    <button @click="changC2">点击修改第二台车</button>
     <button @click="changCar">点击修改</button>
   </div>
 </template>
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
+import { log } from 'console'
 import {  reactive, watch } from 'vue'
   const person = reactive({
     name: '张三',
@@ -39,22 +40,11 @@ import {  reactive, watch } from 'vue'
   function changCar(){
     person.car={c1:'雅迪',c2:'台铃'}
   }
-   // 监视，情况四：监视响应式对象中的某个属性，且该属性是基本类型的，要写成函数式
-  /* watch(()=> person.name,(newValue,oldValue)=>{
-    console.log('person.name变化了',newValue,oldValue)
-  }) */
 
-  // 监视，情况四：监视响应式对象中的某个属性，且该属性是对象类型的，可以直接写，也能写函数，更推荐写函数
-
-  watch(() => person.name, (newValue, oldValue) => {
-    console.log("变拉"+newValue, oldValue);
-  })
-  // watch(person.car, (newValue, oldValue) => {
-  //   console.log("变拉"+newValue, oldValue);
-  // })
-  watch(() => person.car, (newValue, oldValue) => {
-    console.log("变拉"+newValue, oldValue);
-  },{deep:true})
+  //监视：监视上述的多个数据
+  watch([() => person.car,() =>person.name], (newValue, oldValue) => {
+    console.log("发生变化",newValue, oldValue);
+   },{deep:true})
 </script>
 
 <style scoped>
