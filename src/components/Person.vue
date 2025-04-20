@@ -8,8 +8,7 @@
       <li v-for="g in games" :key="g.id">{{ g.name }}</li>
     </ul>
     <button @click="changeGame">修改第一个游戏的名字</button>
-    <p>c:{{ obj.a.b.c.d }}</p>
-    <button @click="changeObj">测试reactive的深层次</button>
+
   </div>
 </template>
 <!--
@@ -18,40 +17,34 @@
 安装后在vite.config.ts中引入：import VueSetupExtend from 'vite-plugin-vue-setup-extend' 并调用
 在script setup中配置name
 作用：减少代码量，写一个script标签即可
+ref 创建：对象类型的响应式数据
+- 其实ref接收的数据可以是：基本类型、对象类型。
+- 若ref接收的是对象类型，内部其实也是调用了reactive函数。
+
 -->
 
 //组合式API
 <script setup lang="ts" name="Person">
-    import { reactive } from 'vue';
+    import { reactive, ref } from 'vue';
 
     // 数据
-    const car =reactive({brand:'奔驰',price:1000})
-    const games = reactive(
+    const car =ref({brand:'奔驰',price:1000})
+    const games = ref(
       [
         {id:'edfhgfjgj',name:'王者荣耀'},
         {id:'shghsghfgh',name:'原神'},
         {id:'shgshshfg',name:'吃鸡'},
       ]
     )
-    const obj = reactive({
-      a:{
-        b:{
-        c:{
-          d:111
-      }}
-    }})
     function changePrice() {
-      car.price += 100
-      console.log(car.price);
+      car.value.price += 100
+      console.log(car.value.price);
     }
     function changeGame() {
-      games[0].name = '和平精英'
-      console.log(games[0].name);
+      games.value[0].name = '和平精英'
+      console.log(games.value[0].name);
     }
-    function changeObj() {
-      obj.a.b.c.d = 222
-      console.log(obj.a.b.c.d);
-    }
+
 </script>
 
 <style scoped>
