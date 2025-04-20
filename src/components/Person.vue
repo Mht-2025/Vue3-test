@@ -1,13 +1,15 @@
 <template>
   <div class="person">
-    <h2>姓名：{{name}}</h2>
-    <h2>年龄：{{age}}</h2>
-
-    <button @click="changeName">修改名字</button>
-    <button @click="changeAge">修改年龄</button>
-    <button @click="showTel">查看联系方式</button>
+    <h2>一辆{{car.brand}}车价值{{car.price}}万</h2>
+    <button @click="changePrice">点击修改汽车价格</button>
     <hr>
-
+    <h2>游戏列表</h2>
+    <ul>
+      <li v-for="g in games" :key="g.id">{{ g.name }}</li>
+    </ul>
+    <button @click="changeGame">修改第一个游戏的名字</button>
+    <p>c:{{ obj.a.b.c.d }}</p>
+    <button @click="changeObj">测试reactive的深层次</button>
   </div>
 </template>
 <!--
@@ -18,35 +20,38 @@
 作用：减少代码量，写一个script标签即可
 -->
 
-
-//配置组件名称
-<!-- <script lang="ts">
-  export default {
-    name:'Person-info11',
-  }
-</script> -->
 //组合式API
 <script setup lang="ts" name="Person">
-import {ref} from 'vue'
-  //变量
-      const name = ref('张三')//此时的name是响应式数据
-      const age = ref(18)//此时age是响应式数据
-      const tel = '13888888888'
+    import { reactive } from 'vue';
 
-      //方法
-      function changeName (){
-        name.value = 'zhang-san'//页面没有变化，但是代码执行成功了
-        console.log(name.value);
-      }
-      function changeAge (){
-        age.value += 1
-        console.log(age.value);
-
-      }
-      function showTel (){
-        alert(tel)
-      }
-
+    // 数据
+    const car =reactive({brand:'奔驰',price:1000})
+    const games = reactive(
+      [
+        {id:'edfhgfjgj',name:'王者荣耀'},
+        {id:'shghsghfgh',name:'原神'},
+        {id:'shgshshfg',name:'吃鸡'},
+      ]
+    )
+    const obj = reactive({
+      a:{
+        b:{
+        c:{
+          d:111
+      }}
+    }})
+    function changePrice() {
+      car.price += 100
+      console.log(car.price);
+    }
+    function changeGame() {
+      games[0].name = '和平精英'
+      console.log(games[0].name);
+    }
+    function changeObj() {
+      obj.a.b.c.d = 222
+      console.log(obj.a.b.c.d);
+    }
 </script>
 
 <style scoped>
