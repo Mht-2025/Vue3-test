@@ -1,29 +1,52 @@
 <template>
   <div class="person">
-    <h1>情况一：监视【ref】定义的【基本数据】类型</h1>
-    <h2>求和：{{ sum }}</h2>
-    <button @click="changSum">+</button>
+    <h1>情况二：监视【ref】定义的【对象数据】类型</h1>
+    <h2>姓名：{{ person.name }}</h2>
+    <h2>年龄：{{ person.age }}</h2>
+    <button @click="changName">点击修改名字</button>
+    <button @click="changAge">点击修改年龄</button>
+    <button @click="changPerson">修改整个人</button>
   </div>
 </template>
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
     import {ref,watch} from 'vue'
-    const sum = ref(0)
-    function changSum(){
-      sum.value+=1
-    }
-    //监听sum的变化，当sum发生变化时，执行回调函数
-    // watch(监听的对象,回调函数0回调函数要有两个参数：新值，旧值)
-    // 返回值是一个函数，调用这个函数，可以停止watch监听
-    const stopWatch=watch(sum,(newValue,oldValue)=>{
-      console.log('sum变化了',"新："+newValue,"旧"+oldValue)
-      // 当sum的值大于10时，停止watch监听
-      // stopWatch()
-    if(newValue>=10){
-      stopWatch()
-    }
+    //数据
+    const person = ref({
+      name:'张三',
+      age:18
     })
+    //监视
+    watch(person,(newValue,oldValue)=>{
+        console.log(newValue,oldValue)
+    })
+    function changName(){
+      person.value.name += '~~'
+    }
+    function changAge(){
+      person.value.age += 1
+    }
+    function changPerson(){
+      person.value = {
+        name:'李四',
+        age:20
+      }
+
+    }
+    /*
+    监听 情况二：监视【ref】定义的【对象数据】类型
+    监视的是对象的地址值，若想监视对象内部属性的变化，
+    需要手动开启深度监视 ，即配置对象中的deep为true
+    watch的第一个参数是：被监视的数据
+    watch的第二个参数是：监视的回调
+    watch的第三个参数是：配置对象（deep、immediate等等.....）
+    immediate 配置项：默认是false，立即执行回调函数，
+    如果配置为true，则立即执行回调函数，并监视变化
+    */
+    watch(person,(newValue,oldValue)=>{
+      console.log(newValue,oldValue)
+    },{deep:true})
 </script>
 
 <style scoped>
