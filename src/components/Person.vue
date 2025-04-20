@@ -7,30 +7,27 @@
     <button @click="changeAge">修改年龄</button>
     <button @click="showTel">查看联系方式</button>
     <hr>
-    <h2>setup与OptionsAPI的关系</h2>
-    //data和与setup可以一起使用，共存
-    <h2>测试1:{{ a }}</h2>
-    <button @click="b">测试2</button>
-    <h2>测试3:{{ c }}</h2>
+
   </div>
 </template>
+<!--
+笔记
+安装插件 npm i vite-plugin-vue-setup-extend -D
+安装后在vite.config.ts中引入：import VueSetupExtend from 'vite-plugin-vue-setup-extend' 并调用
+在script setup中配置name
+作用：减少代码量，写一个script标签即可
+-->
 
-<script lang="ts">
+
+//配置组件名称
+<!-- <script lang="ts">
   export default {
-    name:'Person-info',
-    data() {
-      return {
-        a:100,
-        c:this.name//data可以读取setup中的响应式数据，但setup不可以读取data中的数据
-      }
-    },
-    methods:{
-      b(){
-        console.log('b');
-      }
-    },
-    setup(){
-     //变量
+    name:'Person-info11',
+  }
+</script> -->
+//组合式API
+<script setup lang="ts" name="Person123">
+  //变量
       let name = '张三' //此时的name不是响应式数据
       let age = 19//此时age不是响应式数据
       const tel = '13888888888'
@@ -48,17 +45,7 @@
       function showTel (){
         alert(tel)
       }
-      return {
-        name,
-        age,
-        tel,
-        changeName,
-        changeAge,
-        showTel
-      }
-      //return ()=>"haha" //箭头函数，srtup不能用this，所以可以直接简写，页面直接渲染返回内容
-    }
-  }
+
 </script>
 
 <style scoped>
