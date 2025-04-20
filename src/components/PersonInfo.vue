@@ -1,47 +1,45 @@
 <template>
   <div class="person">
-    <h2>一辆{{car.brand}}车,价值{{car.price}}万</h2>
-    <button @click="changePrice">点击修改汽车价格</button>
-    <button @click="changeBrand">点击修改汽车品牌</button>
-    <button @click="changeCar">点击修改汽车</button>
+    <h2>姓名：{{person.name}}</h2>
+    <h2>年龄：{{person.age}}</h2>
+    <h2>性别：{{person.gender}}</h2>
+    <button @click="changeName">修改名字</button>
+    <button @click="changeAge">修改年龄</button>
+    <button @click="changeGender">修改性别</button>
   </div>
 </template>
-<!--
-笔记
-安装插件 npm i vite-plugin-vue-setup-extend -D
-安装后在vite.config.ts中引入：import VueSetupExtend from 'vite-plugin-vue-setup-extend' 并调用
-在script setup中配置name
-作用：减少代码量，写一个script标签即可
-ref 创建：对象类型的响应式数据
-- 其实ref接收的数据可以是：基本类型、对象类型。
-- 若ref接收的是对象类型，内部其实也是调用了reactive函数。
-
--->
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
-    import { reactive, ref } from 'vue';
+import { reactive,toRefs } from 'vue'
+  //数据
+  const person = reactive({
+    name: '张三',
+    age: 18,
+    gender: '男'
+  })
+  // 解构 const {name,age,gender} = person相当于
+  // const name = person.name
+  // const age = person.age
+  // const gender = person.gender
+  // 以上定义的（也就是结构出来的）的name,age,gender均不是响应式的
+  // toRefs方法可以将person对象中的属性转换为响应式的ref对象
+  // const {name,age,gender} = toRefs(person)
+  // 加上toRefs方法后，name,age,gender都是响应式的
+  // 相当于 const name = ref(person.name)
+  const {name,age,gender} = toRefs(person)
+  // 方法
+  const changeName = () => {
+    name.value = '李四'
+  }
 
-    // 数据
-    const car =reactive({brand:'奔驰',price:1000})
-    function changePrice() {
-      car.price += 100
-      console.log(car.price);
-    }
-    function changeBrand(){
-      car.brand = '宝马'
-    }
-    function changeCar(){
-      // 用ref定义响应式数据，可以直接修改对象的值
-      // car.value = {brand:'保时捷',price:2000}
-      // 用reactive定义响应式数据，不可以直接修改整个对象对象
-      // 需要用到Object.assing方法，因为reactive返回的是一个对象，不能直接修改
-      //Object.assign 是一个用于合并对象的内置方法，它可以将一个或多个源对象的属性复制到目标对象上，并返回目标对象
-      Object.assign(car,{brand:'保时捷',price:20})
+  const changeAge = () => {
+    age.value += 2
+  }
 
-    }
-
-
+  const changeGender = () => {
+    gender.value = '女'
+  }
 </script>
 
 <style scoped>
