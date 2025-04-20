@@ -11,7 +11,7 @@
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
-import { reactive,toRefs } from 'vue'
+import { reactive,toRef,toRefs } from 'vue'
   //数据
   const person = reactive({
     name: '张三',
@@ -27,7 +27,10 @@ import { reactive,toRefs } from 'vue'
   // const {name,age,gender} = toRefs(person)
   // 加上toRefs方法后，name,age,gender都是响应式的
   // 相当于 const name = ref(person.name)
-  const {name,age,gender} = toRefs(person)
+  // toRef方法可以将person对象中的属性转换为响应式的ref对象
+  // toRef则是取出单个的转换并且的响应式数据，toRefs则将person对象中的所有属性转换为响应式的ref对象
+  const {name,age} = toRefs(person)
+  const gd = toRef(person,'gender')
   // 方法
   const changeName = () => {
     name.value = '李四'
@@ -38,8 +41,10 @@ import { reactive,toRefs } from 'vue'
   }
 
   const changeGender = () => {
-    gender.value = '女'
+    gd.value = '女'
   }
+
+
 </script>
 
 <style scoped>
