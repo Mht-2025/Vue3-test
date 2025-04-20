@@ -1,38 +1,29 @@
 <template>
   <div class="person">
-   姓：<input type="text" v-model="firstName"><br>
-   名：<input type="text" v-model="LastName"><br>
-   <!-- <button @click="getName">姓名</button>{{ AllName }} -->
-    <span>全名：{{ AllName }}</span>
-    <button @click="changeName">改名</button>
+    <h1>情况一：监视【ref】定义的【基本数据】类型</h1>
+    <h2>求和：{{ sum }}</h2>
+    <button @click="changSum">+</button>
   </div>
 </template>
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
-import { ref ,computed} from 'vue';
-const firstName = ref('张');
-const LastName = ref('三');
-
- // 计算属性——只读取，不修改
-  /* let fullName = computed(()=>{
-    return firstName.value + '-' + lastName.value
-  }) */
-
-const AllName = computed({
-  get(){
-    return firstName.value +"-"+ LastName.value;
-  },
-  set(val){
-    console.log("有人给名啦",val);
-    //以“-”分割并分别取出
-    firstName.value = val.split('-')[0];
-    LastName.value = val.split('-')[1];
-  }
-});
-  function changeName(){
-    AllName.value = 'hao-四';
-  }
+    import {ref,watch} from 'vue'
+    const sum = ref(0)
+    function changSum(){
+      sum.value+=1
+    }
+    //监听sum的变化，当sum发生变化时，执行回调函数
+    // watch(监听的对象,回调函数0回调函数要有两个参数：新值，旧值)
+    // 返回值是一个函数，调用这个函数，可以停止watch监听
+    const stopWatch=watch(sum,(newValue,oldValue)=>{
+      console.log('sum变化了',"新："+newValue,"旧"+oldValue)
+      // 当sum的值大于10时，停止watch监听
+      // stopWatch()
+    if(newValue>=10){
+      stopWatch()
+    }
+    })
 </script>
 
 <style scoped>
