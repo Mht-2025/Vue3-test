@@ -1,9 +1,5 @@
 <template>
-  <div class="app">
-    <h2 ref="title2">你好</h2>
-    <button @click="test">点我输出你好</button>
-    <Personinfo ref="ren"/>
-  </div>
+    <Personinfo/>
 </template>
 <!--
 在 <script setup> 中，
@@ -12,14 +8,6 @@
 -->
 <script lang="ts" setup name="App">
   import Personinfo from './components/PersonInfo.vue'
-  import { ref } from 'vue'
-  const title2 = ref()
-  const ren = ref()
-  function test(){
-    console.log(title2.value);
-    console.log(ren.value);
-
-  }
 </script>
 
 <style>
