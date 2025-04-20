@@ -26,20 +26,21 @@
   }
 </script> -->
 //组合式API
-<script setup lang="ts" name="Person123">
+<script setup lang="ts" name="Person">
+import {ref} from 'vue'
   //变量
-      let name = '张三' //此时的name不是响应式数据
-      let age = 19//此时age不是响应式数据
+      const name = ref('张三')//此时的name是响应式数据
+      const age = ref(18)//此时age是响应式数据
       const tel = '13888888888'
 
       //方法
       function changeName (){
-        name = 'zhang-san'//页面没有变化，但是代码执行成功了
-        console.log(name);
+        name.value = 'zhang-san'//页面没有变化，但是代码执行成功了
+        console.log(name.value);
       }
       function changeAge (){
-        age += 1
-        console.log(age);
+        age.value += 1
+        console.log(age.value);
 
       }
       function showTel (){
