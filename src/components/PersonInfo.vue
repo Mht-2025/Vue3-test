@@ -1,52 +1,54 @@
 <template>
   <div class="person">
-    <h1>情况二：监视【ref】定义的【对象数据】类型</h1>
+    <h1>情况三：监视【reactive】定义的【对象数据】类型</h1>
     <h2>姓名：{{ person.name }}</h2>
     <h2>年龄：{{ person.age }}</h2>
     <button @click="changName">点击修改名字</button>
     <button @click="changAge">点击修改年龄</button>
     <button @click="changPerson">修改整个人</button>
+    <hr>
+    <h2>测试：{{ sum.a.b.c }}</h2>
   </div>
 </template>
 
 //组合式API
 <script setup lang="ts" name="PersonInfo">
-    import {ref,watch} from 'vue'
+import {reactive,watch} from 'vue'
     //数据
-    const person = ref({
+    const person = reactive({
       name:'张三',
       age:18
     })
+    const sum ={
+      a:{
+        b:{
+          c:999
+        }
+      }
+    }
+    console.log(sum);
+
     //监视
     watch(person,(newValue,oldValue)=>{
         console.log(newValue,oldValue)
     })
     function changName(){
-      person.value.name += '~~'
+      person.name += '~~'
     }
     function changAge(){
-      person.value.age += 1
+      person.age += 1
     }
     function changPerson(){
-      person.value = {
-        name:'李四',
-        age:20
-      }
-
+      Object.assign(person,{name:'李四',age:20})
     }
-    /*
-    监听 情况二：监视【ref】定义的【对象数据】类型
-    监视的是对象的地址值，若想监视对象内部属性的变化，
-    需要手动开启深度监视 ，即配置对象中的deep为true
-    watch的第一个参数是：被监视的数据
-    watch的第二个参数是：监视的回调
-    watch的第三个参数是：配置对象（deep、immediate等等.....）
-    immediate 配置项：默认是false，立即执行回调函数，
-    如果配置为true，则立即执行回调函数，并监视变化
-    */
+    // 监视，情况三：监视【reactive】定义的【对象类型】数据，
+    // 且默认是开启深度监视的
     watch(person,(newValue,oldValue)=>{
-      console.log(newValue,oldValue)
-    },{deep:true})
+      console.log("person变化了",newValue,oldValue);
+    })
+
+
+
 </script>
 
 <style scoped>
