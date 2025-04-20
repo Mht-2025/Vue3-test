@@ -1,50 +1,53 @@
 <template>
   <div class="person">
-    <h1>情况五：监视上述的多个数据</h1>
-    <h2>姓名：{{ person.name }}</h2>
-    <h2>年龄：{{ person.age }}</h2>
-    <h2>第一台车：{{ person.car.c1 }}</h2>
-    <h2>第二台车：{{ person.car.c2 }}</h2>
-    <button @click="changName">点击修改姓名</button>
-    <button @click="changAge">点击修改年龄</button>
-    <button @click="changC1">点击修改第一台车</button>
-    <button @click="changC2">点击修改第二台车</button>
-    <button @click="changCar">点击修改</button>
+    <h1>watchEffect</h1>
+    <h2 id="demo">水温：{{ temp }} °0</h2>
+    <h2>水位：{{ height }}cm</h2>
+    <button @click="changTemp">水温+10</button>
+    <button @click="changHeight">水位+10</button>
   </div>
 </template>
 
-//组合式API
 <script setup lang="ts" name="PersonInfo">
-import { log } from 'console'
-import {  reactive, watch } from 'vue'
-  const person = reactive({
-    name: '张三',
-    age: 18,
-    car:{
-      c1:'奔驰',
-      c2:'保时捷'
+    import { ref,watch, watchEffect } from 'vue';
+    const temp = ref(0);
+    const height = ref(0);
+    function changTemp() {
+      temp.value += 10;
+    }
+    function changHeight() {
+      height.value += 10;
+    }
+    // watchEffect(() => {
+    //   if (temp.value > 50 ) {
+    //     alert('水温过高');
+    //   }
+    // });
+    // watchEffect(() => {
+    //   if (height.value > 40 ) {
+    //     alert('水位过高');
+    //   }
+    // })
+
+    // 用watch实现，需要明确的指出要监视：temp、height
+   watch([temp,height],(value)=>{
+    // 从value中获取最新的temp值、height值
+    const [newTemp,newHeight] = value
+    // 室温达到50℃，或水位达到20cm，立刻联系服务器
+    if(newTemp >= 50 || newHeight >= 20){
+      console.log('联系服务器')
     }
   })
-  function changName(){
-    person.name += "~"
-  }
-  function changAge(){
-    person.age += 1
-  }
-  function changC1(){
-    person.car.c1 = "大众"
-  }
-  function changC2(){
-    person.car.c2 = "红旗"
-  }
-  function changCar(){
-    person.car={c1:'雅迪',c2:'台铃'}
-  }
 
-  //监视：监视上述的多个数据
-  watch([() => person.car,() =>person.name], (newValue, oldValue) => {
-    console.log("发生变化",newValue, oldValue);
-   },{deep:true})
+    // 用watchEffect实现，不用
+    const stopWtach = watchEffect(() => {
+      // 室温达到50℃，或水位达到20cm，立刻联系服务器
+      if (height.value > 40 || temp.value > 50 ) {
+        console.log('水位过高或水温过高,停止监视');
+        // 停止监视
+        stopWtach();
+      }
+    })
 </script>
 
 <style scoped>
