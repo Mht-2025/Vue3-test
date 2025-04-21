@@ -1,54 +1,22 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+// eslint-disable-next-line vue/multi-word-component-names
 <template>
   <div class="person">
-    <h2>当前求和为：{{ sum }}</h2>
-    <button @click="add">点我sum+1</button>
+    <h1>自定义hook</h1>
+    <h2>当前求和：{{ sum }}</h2>
+    <h2>放大20倍：{{ bigSum }}</h2>
+    <button @click="add">点我+1</button>
+    <hr />
+    <img v-for="(dog, index) in dogList" :key="index" :src="dog" /><br />
+    <button @click="getDog">再来一只</button>
   </div>
 </template>
 
 <script lang="ts" setup name="Person">
-import {
-  ref,
-  onBeforeMount,
-  onMounted,
-  onBeforeUpdate,
-  onUpdated,
-  onBeforeUnmount,
-  onUnmounted,
-} from "vue";
-
-// 数据
-const sum = ref(0);
-// 方法
-function add() {
-  sum.value += 1;
-}
-// 创建
-console.log("创建");
-
-// 挂载前
-onBeforeMount(() => {
-  console.log("挂载前");
-});
-// 挂载完毕
-onMounted(() => {
-  console.log("子---挂载完毕");
-});
-// 更新前
-onBeforeUpdate(() => {
-  console.log("更新前");
-});
-// 更新完毕
-onUpdated(() => {
-  console.log("更新完毕");
-});
-// 卸载前
-onBeforeUnmount(() => {
-  // console.log('卸载前')
-});
-// 卸载完毕
-onUnmounted(() => {
-  // console.log('卸载完毕')
-});
+import useDog from "../hooks/useDog";
+import useSum from "../hooks/useSum";
+const { dogList, getDog } = useDog();
+const { sum, add, bigSum } = useSum();
 </script>
 
 <style scoped>
@@ -63,5 +31,9 @@ button {
 }
 li {
   font-size: 20px;
+}
+img {
+  height: 200px;
+  margin: 10px;
 }
 </style>
