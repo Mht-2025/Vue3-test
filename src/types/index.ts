@@ -6,5 +6,6 @@ export interface PersonInter {
 }
 
 //一个自定义类型
+// export type Persons = Array<PersonInter>;
 export type Persons = Array<PersonInter>;
-// type Persons = PersonInter[];
+// export type Persons = PersonInter[];

@@ -1,25 +1,37 @@
 <template>
   <div class="person">
-   <h1>回顾TS中的-接口-泛型-自定义类型</h1>
+   <h1>props</h1>
+    <ul>
+      <li v-for="p in list" :key="p.id">{{ p.name }}</li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts" name="PersonInfo">
-import {type PersonInter,type Persons} from '../types/index'
-const person:PersonInter = {id:'dbsafu01',name:'张三',age:23}
-// const personList:PersonInter[]= [
-//   {id:'dbsafu01',name:'张三',age:23},
-//   {id:'dbsafu02',name:'李四',age:24},
-//   {id:'dbsafu03',name:'王五',age:25}
-// ]
-// 定义一个变量personList，personList是一个数组，数组里的每一项都符合PersonInter接口规范
-const personList:Persons= [
-  {id:'dbsafu01',name:'张三',age:23},
-  {id:'dbsafu02',name:'李四',age:24},
-  {id:'dbsafu03',name:'王五',age:25}
-]
-console.log(personList);
-console.log(person);
+  import { type Persons} from '../types/index'
+  import { defineProps , withDefaults} from 'vue';
+  //接受list
+  // defineProps(['list'])
+
+  // 接受list，并限制规范
+  // defineProps<{list:Persons}>()
+
+  // 接受list + 限制规范 + 限制必要性 + 制定默认值
+  // withDefaults 是 Vue 3 中的一个 API，
+  // 用于为组件的 props 设置默认值
+  // 默认值的规则
+  // 如果 prop 的类型是对象或数组，
+  // 默认值必须是一个返回该类型的函数。
+  // 基本类型（如字符串、数字、布尔值）可以直接赋值。
+
+  withDefaults(defineProps<{list?:Persons}>(),{
+    //默认值注意格式，需要是一个函数，返回一个值
+   list:()=> [{id:'e98219e12',name:'妹妹',age:92}]
+  })
+
+  // 接受list，并将props保存起来
+  // const x=  defineProps(['list'])
+  // console.log(x.list);
 
 </script>
 
