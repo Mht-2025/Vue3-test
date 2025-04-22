@@ -5,10 +5,16 @@
     <div class="navigate">
       <!-- RouterLink组件代替传统在a标签，
         active-class="xiaozhupeiqi"：当路由匹配成功时，就会添加该类名
+        to：路由地址
+        第一种：to的字符串写法
+        <router-link active-class="active" to="/home">主页</router-link>
+        第二种：to的对象写法
+        <router-link active-class="active" :to="{path:'/home'}">Home</router-link>
+        <RouterLink :to="{ path: '/about' }" active-class="xiaozhupeiqi">关于</RouterLink>
        -->
       <RouterLink to="/home" active-class="xiaozhupeiqi">首页</RouterLink>
-      <RouterLink to="/news" active-class="xiaozhupeiqi">新闻</RouterLink>
-      <RouterLink to="/about" active-class="xiaozhupeiqi">关于</RouterLink>
+      <RouterLink :to="{ name: 'xinwen' }" active-class="xiaozhupeiqi">新闻</RouterLink>
+      <RouterLink :to="{ path: '/about' }" active-class="xiaozhupeiqi">关于</RouterLink>
     </div>
     <!-- 展示区 -->
     <div class="main-content">

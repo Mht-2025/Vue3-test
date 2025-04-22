@@ -4,7 +4,15 @@
   </div>
 </template>
 
-<script setup lang="ts" name="About"></script>
+<script setup lang="ts" name="About">
+import { onBeforeMount, onUnmounted } from "vue";
+onBeforeMount(() => {
+  console.log("挂载了");
+});
+onUnmounted(() => {
+  console.log("卸载了");
+});
+</script>
 
 <style scoped>
 .about {
