@@ -28,6 +28,7 @@ const router = createRouter({
       children:[
         {
           name:'xinwenxiangqing',
+          // 子集路由路径不用带/
           path:'detail',
           component:Detail,
         }

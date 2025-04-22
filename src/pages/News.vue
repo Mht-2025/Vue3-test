@@ -1,11 +1,29 @@
 <template>
   <div class="news">
     <ul>
-      <li v-for="p in newsList" :key="p.id">
-        <router-link to="/news/detail">{{ p.tital }}</router-link>
+      <li v-for="news in newsList" :key="news.id">
+        <!-- 路由传参 写法一： -->
+        <!-- <router-link
+          :to="`/news/detail?id=${news.id}&title=${news.title}&content=${news.content}`"
+          >{{ news.title }}</router-link
+        > -->
+        <!-- 路由传参 写法二： -->
+        <router-link
+          :to="{
+            path: '/news/detail',
+            query: {
+              id: news.id,
+              title: news.title,
+              content: news.content,
+            },
+          }"
+          >{{ news.title }}</router-link
+        >
       </li>
     </ul>
-    <router-view></router-view>
+    <div class="news-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -13,10 +31,10 @@
 import { reactive } from "vue";
 
 const newsList = reactive([
-  { id: "jhehofkg01", tital: "新闻001", content: "新闻内容001" },
-  { id: "jhehofkg02", tital: "新闻002", content: "新闻内容002" },
-  { id: "jhehofkg03", tital: "新闻003", content: "新闻内容003" },
-  { id: "jhehofkg04", tital: "新闻004", content: "新闻内容004" },
+  { id: "jhehofkg01", title: "好消息！好消息！", content: "梅海婷要暴富啦！" },
+  { id: "jhehofkg02", title: "找工作?", content: "梅海婷竟然一周收到三个offer" },
+  { id: "jhehofkg03", title: "新闻003", content: "新闻内容003" },
+  { id: "jhehofkg04", title: "新闻004", content: "新闻内容004" },
 ]);
 </script>
 
@@ -30,8 +48,12 @@ const newsList = reactive([
 }
 .news ul {
   margin-top: 30px;
-  list-style: none;
+  /* list-style: none; */
   padding-left: 10px;
+}
+/* 列表项前缀 */
+.news li::marker {
+  color: pink;
 }
 .news li > a {
   font-size: 18px;
