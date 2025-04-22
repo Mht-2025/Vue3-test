@@ -2,23 +2,24 @@
   <div class="news">
     <ul>
       <li v-for="news in newsList" :key="news.id">
-        <!-- 路由传参 写法一： -->
-        <!-- <router-link
+        <!-- 路由传参param 写法一： -->
+        <!-- <routerlink
           :to="`/news/detail?id=${news.id}&title=${news.title}&content=${news.content}`"
           >{{ news.title }}</router-link
         > -->
-        <!-- 路由传参 写法二： -->
+        <!-- 路由传参param 写法二： -->
         <router-link
           :to="{
-            path: '/news/detail',
-            query: {
+            name: 'xinwenxiangqing',
+            params: {
               id: news.id,
               title: news.title,
               content: news.content,
             },
           }"
-          >{{ news.title }}</router-link
         >
+          {{ news.title }}
+        </router-link>
       </li>
     </ul>
     <div class="news-content">

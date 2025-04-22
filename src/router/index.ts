@@ -29,7 +29,7 @@ const router = createRouter({
         {
           name:'xinwenxiangqing',
           // 子集路由路径不用带/
-          path:'detail',
+          path:'detail/:id/:title/:content',
           component:Detail,
         }
       ]
