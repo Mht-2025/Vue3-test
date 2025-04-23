@@ -1,8 +1,10 @@
 <template>
   <div class="news">
     <ul>
-      <li v-for="news in newsList" :key="news.id">
-        <router-link
+      <li v-for="news in newsList" :key="news.id" @click="showNews(news)">
+        <!-- <button @click="showNews(news)">查看新闻</button> -->
+        {{ news.title }}
+        <!-- <router-link
           :to="{
             name: 'xinwenxiangqing',
             query: {
@@ -13,7 +15,7 @@
           }"
         >
           {{ news.title }}
-        </router-link>
+        </router-link> -->
       </li>
     </ul>
     <div class="news-content">
@@ -23,6 +25,7 @@
 </template>
 
 <script setup lang="ts" name="News">
+import { useRouter } from "vue-router";
 import { reactive } from "vue";
 
 const newsList = reactive([
@@ -31,6 +34,23 @@ const newsList = reactive([
   { id: "jhehofkg03", title: "新闻003", content: "新闻内容003" },
   { id: "jhehofkg04", title: "新闻004", content: "新闻内容004" },
 ]);
+// 新闻类型 interface 解释 https://www.typescriptlang.org/docs/handbook/2/objects.html
+interface News {
+  id: string;
+  title: string;
+  content: string;
+}
+const router = useRouter();
+function showNews(news: News) {
+  router.push({
+    name: "xinwenxiangqing",
+    query: {
+      id: news.id,
+      title: news.title,
+      content: news.content,
+    },
+  });
+}
 </script>
 
 <style scoped>
@@ -45,6 +65,9 @@ const newsList = reactive([
   margin-top: 30px;
   /* list-style: none; */
   padding-left: 10px;
+}
+.news li {
+  cursor: pointer;
 }
 /* 列表项前缀 */
 .news li::marker {

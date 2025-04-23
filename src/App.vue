@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2 class="title">Vue路由测试</h2>
+    <h2 class="title">Vue路由测试：编程式路由导航</h2>
     <!-- 导航区 -->
     <div class="navigate">
       <!-- RouterLink组件代替传统在a标签，

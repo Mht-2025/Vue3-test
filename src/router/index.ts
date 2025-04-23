@@ -13,6 +13,11 @@ const router = createRouter({
   history:createWebHistory(),//路由器的工作模式
   // 管理的路由
   routes:[//一个一个的路由规则
+        //  {
+        //   path:'/',
+        //   name:'Home',
+        //   component:Home
+        // },
     {
       // 路由名称
       // path:'路径',
@@ -26,6 +31,7 @@ const router = createRouter({
       path:'/news',
       component:News,
       children:[
+
         {
           name:'xinwenxiangqing',
           // 子集路由路径不用带/
