@@ -1,6 +1,6 @@
 <template>
   <div class="count">
-    <h2>当前求和为：{{ sum }}</h2>
+    <h2>当前求和为：{{ countStore.sum }}</h2>
     <!-- 下拉列表 -->
     <!-- v-model.number="n" 表示将输入的值转为数字类型 -->
     <select v-model.number="n">
@@ -16,14 +16,17 @@
 </template>
 <script setup lang="ts" name="loveTalk">
 import { ref } from "vue";
-const sum = ref(1); //当前求和
+import { useCountStore } from "@/store/count";
+
 const n = ref(1); //用户当前选中的数字
-const add = () => {
-  sum.value += n.value;
-};
-const minus = () => {
-  sum.value -= n.value;
-};
+const countStore = useCountStore();
+console.log("qq", countStore.sum);
+function add() {
+  countStore.sum += n.value;
+}
+function minus() {
+  countStore.sum -= n.value;
+}
 </script>
 <style scoped>
 .count {
