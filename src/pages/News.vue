@@ -2,16 +2,10 @@
   <div class="news">
     <ul>
       <li v-for="news in newsList" :key="news.id">
-        <!-- 路由传参param 写法一： -->
-        <!-- <routerlink
-          :to="`/news/detail?id=${news.id}&title=${news.title}&content=${news.content}`"
-          >{{ news.title }}</router-link
-        > -->
-        <!-- 路由传参param 写法二： -->
         <router-link
           :to="{
             name: 'xinwenxiangqing',
-            params: {
+            query: {
               id: news.id,
               title: news.title,
               content: news.content,
