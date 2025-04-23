@@ -1,6 +1,7 @@
 <template>
   <div class="count">
     <h2>当前求和为：{{ countStore.sum }}</h2>
+    <h3>欢迎来到:{{ countStore.school }}，坐落于：{{ countStore.address }}</h3>
     <!-- 下拉列表 -->
     <!-- v-model.number="n" 表示将输入的值转为数字类型 -->
     <select v-model.number="n">
@@ -21,12 +22,27 @@ import { useCountStore } from "@/store/count";
 const n = ref(1); //用户当前选中的数字
 const countStore = useCountStore();
 console.log("qq", countStore.sum);
+// function add() {
+//   countStore.sum += n.value;
+// }
+// function minus() {
+//   countStore.sum -= n.value;
+// }
 function add() {
-  countStore.sum += n.value;
+  // 第一种修改方式
+  // countStore.sum += 1
+
+  // 第二种修改方式
+  countStore.$patch({
+    sum: 888,
+    school: "尚硅谷",
+    address: "北京",
+  });
+
+  // 第三种修改方式
+  // countStore.increment(n.value);
 }
-function minus() {
-  countStore.sum -= n.value;
-}
+function minus() {}
 </script>
 <style scoped>
 .count {
