@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 //
 export const useCountStore = defineStore("count", {
+  // actions放置动作函数
    actions:{
     increment(value: number){
       console.log('increment被调用了',value)
